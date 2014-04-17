@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Datasource settings-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+		<property name="driverClassName" value="org.postgresql.Driver"></property>
+		<property name="url" value="jdbc:postgresql://localhost:5432/postgres"></property>
+		<property name="username" value="test"></property>
+		<property name="password" value="test"></property>
+	</bean>
+	
+	<!-- SessionFactory settings -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<!--包级扫描 hibernate实体类 -->
+		<property name="configLocations">
+		  <list>
+				<!--<value>com.springmvc.*</value> -->
+		      <!-- <value>classpath*:jlibrary/entity/hibernate.cfg.userInfo.xml</value> -->
+		  </list>
+		</property>
+		<property name="packagesToScan" value="jlibrary.entity"/>
+		<!-- <property name="annotatedClasses">
+			<list>
+				<value>jlibrary.entity.*</value>
+			</list>
+		</property> -->
+	</bean>
+	
+	<!-- TransactionManager settings -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- Proxy settings -->
+	<bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
+	    <property name="transactionManager" ref="transactionManager"></property>  
+	    <property name="transactionAttributes">  
+	        <props>  
+	            <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>  
+	            <prop key="modify*">PROPAGATION_REQUIRED,-myException</prop>  
+	            <prop key="del*">PROPAGATION_REQUIRED</prop>  
+	            <prop key="*">PROPAGATION_REQUIRED</prop>  
+	        </props>  
+	    </property>  
+	</bean> 
+</beans>
