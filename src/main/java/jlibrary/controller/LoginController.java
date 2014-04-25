@@ -5,10 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import jlibrary.dao.UserDao;
 import jlibrary.entity.User;
 import jlibrary.service.UserManager;
+import jlibrary.util.Constants;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/user") 
@@ -16,24 +19,68 @@ public class LoginController {
 
 	@Autowired
 	private UserManager userManager;
+	
 	@Autowired
 	private UserDao userDao;
 	
+	private static final Logger log = Logger.getLogger(LoginController.class.getName());
+	
 	@RequestMapping("/login")
+	public ModelAndView login(String username, String password, HttpServletRequest request) {
+		
+		if ( checkLoginParams(new String[]{username, password}) ) {
+			User user = userManager.getUserById(Integer.valueOf(username));
+			
+			if ( user == null ) {
+				if ( log.isDebugEnabled() )
+					log.debug("no such user: "+username);
+				return new ModelAndView(Constants.HOME_PAGE);
+				
+			} else if ( !password.equals(user.getPassword()) ) {
+				if ( log.isDebugEnabled() )
+					log.debug("password incorrect for user: "+username);
+				return new ModelAndView(Constants.HOME_PAGE);
+				
+			} else {
+				if ( log.isDebugEnabled() )
+					log.debug("got user: "+username);
+				return new ModelAndView("welcome");
+			}
+		}
+		return new ModelAndView(Constants.HOME_PAGE);
+		
+	}
+	
+	private boolean checkLoginParams(String[] params) {
+		for ( String param :  params ) {
+			if ( param == null || param.trim().equals("") ) {
+				if ( log.isDebugEnabled() )
+					log.debug("no arguement passed in during login");
+				return false;
+			}
+		}
+		return true;
+	}
+
+/*	@RequestMapping("/login")
 	public String login(String username, String password, HttpServletRequest request) {
 		User user = userManager.getUserById(Integer.valueOf(username));
 		
 		if ( user == null ) {
 			System.out.println("No such user");
+			ModelAndView mav = new ModelAndView("/login");
 			return "login";
 			
 		} else if ( !password.equals(user.getPassword()) ) {
-			System.out.println("No such user");
+			ModelAndView mav = new ModelAndView("/login");
 			return "login";
 			
 		} else {
+			System.out.println("Got the user");
+			ModelAndView mav = new ModelAndView("/welcome");
 			return "welcome";
+
 		}
 	}
-
+*/
 }
