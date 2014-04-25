@@ -11,7 +11,8 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	
 	<!-- Scan settings -->
-	<context:component-scan base-package="jlibrary.controller" />
+	<context:component-scan base-package="jlibrary" />
+	<context:annotation-config />
 
 	<!-- Annotation settings -->
 	<mvc:annotation-driven />
