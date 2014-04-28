@@ -12,16 +12,22 @@
 
 <div id="login-pg-top">
     <div id="login-input-area">
-        <div id="input-area-center">
-            <div id="area-logo">JLibrary
+        <div id="login-input-area-center">
+            <div id="login-area-logo">
+                JLibrary
             </div>
-            <div id="area-fields">
-				<form action="user/login" name="loginForm" method="post">
-					<div>username <input type="text" name="username" value="" ></div>
-					<div>password <input type="password" name="password" value=""  ></div>
-					<div><input type="submit" value="submit" ></div>
-				</form>
-			</div>
+            <div id="login-area-fields">
+                <form action="user/login" name="loginForm" method="post">
+                    <div class="login-input-row">
+                        <span class="login-input-label">Username</span>
+                        <input class="login-input-box" type="text" name="username" value="" ></div>
+                    <div class="login-input-row">
+                        <span class="login-input-label">Password</span>
+                        <span ><input class="login-input-box" type="password" name="password" value="" ></span>
+                    </div>
+                    <div><input class="login-submit-button" type="submit" value="submit" ></div>
+                </form>
+            </div>
 		</div>
 	</div>
 </div>
