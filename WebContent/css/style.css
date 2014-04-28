@@ -17,6 +17,7 @@ html, body {
 	text-align:center;
 	height: 42%;
 	width: 100%;
+	border-top: dotted 1px #618391;
 	/*background-color: #E2DEDE;*/
 	background-color: #B2D9F8;
 }
@@ -29,38 +30,66 @@ html, body {
 	width: 100%;
 }
 
-#input-area-center {
+#login-input-area-center {
 	margin: 0 auto;
-	width: 600px;
+	width: 520px;
 	height: 120px;
 	margin-top: 30px;
 	/*background-color: #E2DEDE;*/
 }
 
-#area-logo {
+#login-area-logo {
 	width: 120px;
-	height: 100px;
+	height: 110px;
 	float:left;
-	-webkit-border-radius: 20px;
-    border-radius: 20px;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+    font-family:Arial,Verdana,Sans-serif;
     font-size: 20pt;
+    font-weight: bold;
+    line-height:100px;
     color: #FFFFFF;
 	background-color: #B2D9F8;
 }
 
-#area-fields {
-	width: 480px;
+#login-area-fields {
+	width: 400px;
     float: right;
-    background-color: #E2DEDE;
+    /*background-color: #E2DEDE;*/
+    text-align: right;
 }
 
-#pg-container {
-	width: 1024px;
-	margin: auto;
+.login-input-row {
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-# page-footer {
-	height: 60px;
-	clear: both;
-	background: green;
+.login-input-label {
+	float: left;
+	margin-left: 50px;
+	height: 30px;
+	line-height: 30px;
+	font-family:Arial,Verdana,Sans-serif;
+    font-size: 14pt;
+    color: #586064;
 }
+
+.login-input-box {
+	width: 220px;
+	height: 30px;
+	border: 1px solid #adb6bc;
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.login-submit-button {
+	width: 80px;
+	height: 30px;
+	background-color: #B2D9F8;
+	color: #FFFFFF;
+	margin-top: 5px;
+	font-family:Arial,Verdana,Sans-serif;
+    font-size: 14pt;
+    border: dotted 0 #B2D9F8;
+}
+
