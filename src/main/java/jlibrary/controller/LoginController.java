@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/user") 
+@RequestMapping("user") 
 public class LoginController {
 
 	@Autowired
 	private UserManager userManager;
-	
-	@Autowired
-	private UserDao userDao;
 	
 	private static final Logger log = Logger.getLogger(LoginController.class.getName());
 	
@@ -44,13 +41,18 @@ public class LoginController {
 			} else {
 				if ( log.isDebugEnabled() )
 					log.debug("got user: "+username);
-				return new ModelAndView("welcome");
+				return new ModelAndView(Constants.MAIN_PAGE);
 			}
 		}
 		return new ModelAndView(Constants.HOME_PAGE);
 		
 	}
 	
+	/**
+	 * Check if the parameters for login are valid or not
+	 * @param params
+	 * @return
+	 */
 	private boolean checkLoginParams(String[] params) {
 		for ( String param :  params ) {
 			if ( param == null || param.trim().equals("") ) {
