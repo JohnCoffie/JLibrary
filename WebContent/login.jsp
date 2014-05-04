@@ -5,7 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>login</title>
-<style type="text/css" media="all">@import "css/style.css";</style> 
+<!-- style type="text/css" media="all">@import "css/style.css";</style> -->
+<link href="${pageContext.request.contextPath}/css/style.css" media="screen" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -17,7 +18,7 @@
                 JLibrary
             </div>
             <div id="login-area-fields">
-                <form action="user/login" name="loginForm" method="post">
+                <form action="${pageContext.request.contextPath}/user/login" name="loginForm" method="post">
                     <div class="login-input-row">
                         <span class="login-input-label">Username</span>
                         <input class="login-input-box" type="text" name="username" value="" ></div>
