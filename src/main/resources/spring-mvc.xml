@@ -10,21 +10,27 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	
-	<!-- Scan settings -->
-	<context:component-scan base-package="jlibrary" />
 	<context:annotation-config />
+	
+	<!-- Scan settings -->
+	<!-- Note: do not scan Controllers Services Daos together here, -->
+	<!--       divide the scanning into two parts                   -->
+	<context:component-scan base-package="jlibrary" use-default-filters="false" > 
+	   <context:include-filter expression="org.springframework.stereotype.Controller" type="annotation"/> 
+	</context:component-scan>
 
 	<!-- Annotation settings -->
 	<mvc:annotation-driven />
 	
 	<!-- Static resources(js/image/css) -->
-	<mvc:resources location="/js/" mapping="/js/**"/>
-	<mvc:resources mapping="/css/**" location="/css/**"/>
-	<mvc:resources mapping="/img/**" location="/img/**)"/> 
+	<mvc:resources mapping="/js/**" location="/static/js/"/>
+	<mvc:resources mapping="/css/**" location="/static/css/"/>
+	<mvc:resources mapping="/img/**" location="/static/img/"/> 
 
 	<!-- ViewResolver settings -->	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+	
 </beans>
