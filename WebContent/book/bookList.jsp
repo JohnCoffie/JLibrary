@@ -11,14 +11,14 @@
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<style type="text/css" media="all">@import "${pageContext.request.contextPath}/css/style.css";</style>
+	<%@ include file="../include/frameHead.jsp" %>
 </head>
   
 <body>
     <div style="width: 120px; margin-bottom: 10px;">
-    <div class="tbl-tr-action" style="float:left;"> <a href="<%=request.getContextPath()%>/user/add">new</a> </div>
+    <div class="tbl-tr-action" style="float:left;"><a href="<%=request.getContextPath()%>/book/new"> new</a></div>
     &nbsp;
-    <div class="tbl-tr-action" style="float:right;"> <a href="<%=request.getContextPath()%>/book/delete/${u.bookId}">delete</a> </div>
+    <div class="tbl-tr-action" style="float:right;"><a href="<%=request.getContextPath()%>/book/delete/${u.bookId}"> delete</a></div>
     </div>
 ${message }
 	
@@ -48,9 +48,7 @@ ${message }
             <td>${u.price}</td> 
             <td>${u.bookCategory.bookCategoryName}</td> 
             <td>
-                <div class="tbl-tr-action2">
-                <a href="<%=request.getContextPath()%>/book/update/${u.bookId}">update</a>
-                </div>
+                <span class="tbl-tr-action2"><a href="<%=request.getContextPath()%>/book/update/${u.bookId}">edit</a></span>
 		    </td>
 		</tr>
 		</c:forEach>
