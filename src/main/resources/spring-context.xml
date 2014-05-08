@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<context:component-scan base-package="jlibrary" > 
+        <context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/> 
+    </context:component-scan>
+	
+	<!-- Datasource settings-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+		<property name="driverClassName" value="org.postgresql.Driver"></property>
+		<property name="url" value="jdbc:postgresql://localhost:5432/postgres"></property>
+		<property name="username" value="test"></property>
+		<property name="password" value="test"></property>
+	</bean>
+	
+	<!-- SessionFactory settings -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+			</props>
+		</property>
+
+		<!--包级扫描 hibernate实体类 -->
+		<property name="configLocations">
+		  <list>
+				<!--<value>com.springmvc.*</value> -->
+		      <!-- <value>classpath*:jlibrary/entity/hibernate.cfg.userInfo.xml</value> -->
+		  </list>
+		</property>
+		<property name="packagesToScan" value="jlibrary.entity"/>
+		<!-- <property name="annotatedClasses">
+			<list>
+				<value>jlibrary.entity.*</value>
+			</list>
+		</property> -->
+	</bean>
+	
+	<!-- TransactionManager settings -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean> 
+	
+	<!-- Proxy settings
+	<bean id="transactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">  
+	    <property name="transactionManager" ref="transactionManager"></property>  
+	    <property name="transactionAttributes">  
+	        <props>  
+	            <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+	            <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+	            <prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>  
+	            <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+	            <prop key="find*">PROPAGATION_NOT_SUPPORTED,readOnly</prop>
+	            <prop key="get*">PROPAGATION_NOT_SUPPORTED,readOnly</prop>  
+	            <prop key="*">PROPAGATION_REQUIRED</prop>  
+	        </props>  
+	    </property>  
+	</bean> -->
+	
+    <!-- 使用annotation注解方式配置事务 -->  
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="add*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="find" propagation="REQUIRED" read-only="true" />
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="remove*" propagation="REQUIRED" read-only="false" />
+            <tx:method name="*" propagation="REQUIRED" read-only="false" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>  
+        <!-- 切入点指明了在执行Service的所有方法时产生事务拦截操作 -->  
+        <aop:pointcut id="transactionPointcut" expression="execution(* jlibrary.service.*.*(..))" />      
+        <!-- 定义了将采用何种拦截操作，这里引用到 txAdvice -->  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointcut" />  
+    </aop:config> 
+    
+ 
+</beans>
