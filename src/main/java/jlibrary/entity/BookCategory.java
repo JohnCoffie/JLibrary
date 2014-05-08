@@ -14,6 +14,13 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="book_category")
 public class BookCategory implements Serializable{
 
+	public BookCategory(){}
+	
+	public BookCategory(int id, String name) {
+		this.bookCategoryId = id;
+		this.bookCategoryName = name;
+	}
+	
 	@Id
 	@GeneratedValue(generator="system-id") 
 	@GenericGenerator(name="system-id",strategy="increment") 
