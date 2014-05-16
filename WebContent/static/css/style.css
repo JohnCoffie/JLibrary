@@ -213,7 +213,7 @@ html, body {
 	/*background: url(../img/title-bg2.png) repeat-x scroll;
 	background-position: bottom;*/
 	/*background: #D6E7FA; */
-	background: #E4EDF8;
+	background: #D7EDFF;
 	height: 32px;
 	color: #000000;
 	font-size: 14px;
@@ -294,10 +294,13 @@ html, body {
 
 .subpage-add-input-box {
 	width: 280px;
-    height: 22px;
+    height: 28px;
     border: 1px solid #adb6bc;
-/*    -webkit-border-radius: 5px;
-    border-radius: 5px;*/
+    padding-left: 5px;
+    font-family:Arial,Verdana,Sans-serif;
+    font-size: 14px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .subpage-action-row {
@@ -307,14 +310,24 @@ html, body {
     margin: 20px; 0 0; 0;
 }
 
-.subpage-action-btn {
-    width: 80px;
+.subpage-action-btn a, .subpage-action-btn a:hover{
+	width: 70px;
     height: 28px;
-    background-color: #6DA5E0;
+    line-height: 28px;
+    text-align: center;
     color: #FFFFFF;
-    margin-top: 5px;
+    font-size: 14px;
     font-family:Arial,Verdana,Sans-serif;
-    font-size: 16px;
-    border: dotted 0 #6DA5E0;
-    cursor: pointer;
+    text-decoration: none; 
+    display: block;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.subpage-action-btn a {
+    background: #6DA5E0;
+}
+
+.subpage-action-btn a:hover {
+    background: #FF9C30;
 }
