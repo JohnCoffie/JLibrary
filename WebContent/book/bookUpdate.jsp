@@ -13,6 +13,11 @@
        $("#btn-submit").click(function(){
     	   $("#bookForm").submit();
        });
+       
+       $("#btn-cancel").click(function(){
+           $("#bookForm").attr("action","${pageContext.request.contextPath}/book/list");;
+           $("#bookForm").submit();
+       });
    });
 </script>
 </head>
@@ -32,10 +37,10 @@
 		<div class="frame">
 		    <div class="subpage-main-title">+ UPDATE THE BOOK</div>
 		    <form action="${pageContext.request.contextPath}/book/update" id="bookForm" method="post">
-		        <div class="subpage-input-row"><span style="float: left;">BOOK NAME:</span><input name="bookName" type="text" class="subpage-add-input-box" value="${book.bookName}"></div>
-		        <div class="subpage-input-row"><span style="float: left;">AUTHOR:</span><input name="author" type="text" class="subpage-add-input-box" value="${book.author}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">BOOK NAME:</span><input name="bookName" type="text" class="subpage-input-box" style="width: 280px;" value="${book.bookName}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">AUTHOR:</span><input name="author" type="text" class="subpage-input-box" style="width: 280px;" value="${book.author}"></div>
 		        <div class="subpage-input-row"><span style="float: left;">CATEGORY:</span>
-		            <select name="category" class="subpage-add-input-box">
+		            <select name="category" class="subpage-input-box" style="width: 280px;" >
 			            <c:forEach items="${categoryList}" var="u">
 			             <c:if test="${book.bookCategory.bookCategoryId == u.bookCategoryId}">
 			                 <option value="${u.bookCategoryId}" selected><c:out value="${u.bookCategoryName}"/></option>
@@ -46,9 +51,10 @@
 			            </c:forEach>
 		            </select>
 		        </div>
-		        <div class="subpage-input-row"><span style="float: left;">PRICE:</span><input name="price" type="text" class="subpage-add-input-box" value="${book.price}"></div>
-		        <div class="subpage-input-row"><span style="float: left;">PUBLISH DATE:</span><input id="publishDate" name="publishDate" type="text" class="subpage-add-input-box" value="${book.publishDate}"></div>
-		        <div class="subpage-input-row"><span style="float: left;">BRIEF INTRO:</span><input name="intro" type="text" class="subpage-add-input-box" value="${book.intro}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">PRICE:</span><input name="price" type="text" class="subpage-input-box" style="width: 280px;" value="${book.price}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">PUBLISH DATE:</span><input id="publishDate" name="publishDate" type="text" class="subpage-input-box" style="width: 280px;" value="${book.publishDate}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">BOOK AMOUNT:</span><input name="amount" type="text" style="width: 50px;" class="subpage-input-box" value="${book.totalNumber}"></div>
+		        <div class="subpage-input-row"><span style="float: left;">BRIEF INTRO:</span><input name="intro" type="text" class="subpage-input-box" style="width: 280px;" value="${book.intro}"></div>
 		        <input type="hidden" name="bookId" value="${book.bookId}">
 		        
 			    <div class="subpage-action-row">
