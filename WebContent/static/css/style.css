@@ -292,8 +292,8 @@ html, body {
     /*background: #FF9ccc;*/
 }
 
-.subpage-add-input-box {
-	width: 280px;
+.subpage-input-box {
+	/*width: 280px;*/
     height: 28px;
     border: 1px solid #adb6bc;
     padding-left: 5px;
