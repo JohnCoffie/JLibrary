@@ -76,7 +76,7 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao{
     }   
   
     public List findList(String queryString, Object[] values) {
-        return getHibernateTemplate().find(queryString, values);   
+        return getHibernateTemplate().find(queryString, values);
     }
 
 }
