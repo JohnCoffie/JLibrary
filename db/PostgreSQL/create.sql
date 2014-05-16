@@ -7,8 +7,10 @@ CREATE TABLE users
   user_id integer NOT NULL,
   name character varying(50) NOT NULL,
   birthday date,
-  sex bit(1),
-  password character varying(30) NOT NULL DEFAULT 123,
+  password character varying(50) NOT NULL DEFAULT 123,
+  sex smallint DEFAULT 1,
+  email character varying,
+  mobile character varying(25),
   CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 )
 WITH (
@@ -27,11 +29,14 @@ ALTER TABLE users
 CREATE TABLE books
 (
   book_id integer NOT NULL,
-  book_name character varying(100) NOT NULL,
+  book_name character varying(50) NOT NULL,
   author character varying(50) NOT NULL,
   publish_date date,
   entry_date date NOT NULL,
   category_id integer NOT NULL,
+  price numeric,
+  intro character varying, -- introduction to the book
+  total_number smallint NOT NULL, -- the number of books that library can offer
   CONSTRAINT pk_book_id PRIMARY KEY (book_id),
   CONSTRAINT fk_category_id FOREIGN KEY (category_id)
       REFERENCES book_category (category_id) MATCH SIMPLE
