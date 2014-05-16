@@ -23,7 +23,9 @@ public class LoginController {
 	private static final Logger log = Logger.getLogger(LoginController.class.getName());
 	
 	@RequestMapping("/login")
-	public ModelAndView login(String username, String password, HttpServletRequest request) {
+	public ModelAndView login(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		
 		if ( checkLoginParams(new String[]{username, password}) ) {
 			User user = userManager.getUserById(Integer.valueOf(username));
@@ -64,25 +66,4 @@ public class LoginController {
 		return true;
 	}
 
-/*	@RequestMapping("/login")
-	public String login(String username, String password, HttpServletRequest request) {
-		User user = userManager.getUserById(Integer.valueOf(username));
-		
-		if ( user == null ) {
-			System.out.println("No such user");
-			ModelAndView mav = new ModelAndView("/login");
-			return "login";
-			
-		} else if ( !password.equals(user.getPassword()) ) {
-			ModelAndView mav = new ModelAndView("/login");
-			return "login";
-			
-		} else {
-			System.out.println("Got the user");
-			ModelAndView mav = new ModelAndView("/welcome");
-			return "welcome";
-
-		}
-	}
-*/
 }
